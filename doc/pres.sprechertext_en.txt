@@ -1,0 +1,25 @@
+# Narration for pres.webm (English) – timecodes refer to the original video, see pres.sprechertext.txt
+
+0:00 ! | I'm currently tinkering, on the side, with an anonymizer for AI requests. The idea: company data, and above all names, should not end up with an AI provider unnecessarily. I'll show it with a fictional class list. Because as a member of the parents' council and class treasurer, a tool like this is very useful, too.
+
+0:07 | So I paste a fictional class list and ask which children have not yet fully paid for the class trip.
+0:16 | The list contains the first and last names of twenty children, plus their individual payments.
+
+0:24 | One click on Anonymize. This happens entirely locally, on my own computer. How exactly, I'll explain in a moment.
+0:33 | At the top there is a note for the AI: it must keep the placeholders unchanged and must not guess any real data. The note is simply copied along.
+0:42 | Below it, the actual text. Every name has been replaced by its own placeholder, with a type and a random identifier.
+0:50 | Strictly speaking, this is pseudonymization: the mapping stays encrypted here on my computer, so the answer can be translated back later. The amounts stay in place; after all, the AI is supposed to calculate with them.
+
+1:05 | Step two: the request goes straight from the application to an AI agent. I choose pi, and "no session". That way, nothing is stored on the agent's side.
+1:16 | The agent runs in the background, without any tools, and only sees the pseudonymized text. While it works, a word about the technology. The foundation is Microsoft Presidio, an open source framework for detecting personal data. On top of that come local neural networks: spaCy models for German and English, and GLiNER, a transformer model that recognizes names, companies and places from their context.
+
+1:36 | After about twenty seconds, the answer is here. On the left, exactly as the AI wrote it, with placeholders only. On the right, the placeholders have automatically been replaced by the real names again.
+1:48 | The language is detected section by section with a fastText model, so texts mixing several languages are handled correctly. Companies are also recognized by legal forms such as GmbH or AG, addresses by street, house number and postal code.
+
+1:54 | For comparison, the same with Claude Code, again without a session.
+2:00 | What counts as sensitive is configurable: persons, companies, addresses, email addresses, phone numbers, IBANs and more. Unusual names or internal product names I simply add to a list. They are then always replaced, even in the middle of a word if desired, and with translations.
+
+2:14 | Claude returns a table and a summary: fourteen of twenty children have not paid in full, and a total of six thousand three hundred euros is still outstanding. Here, too, the names are back in the right places. The AI never saw them.
+2:31 | A slider in the settings defines the confidence from which a finding gets replaced: the lower, the more thorough. And before sending, I can review all detected items in a table.
+
+2:44 ! | And of course, this tool was also built together with Claude, from the first line of code to this voice-over.

@@ -1,0 +1,10 @@
+Angebot 2026-0815 für die Lieferung von Reagenzien
+
+Wir bieten Ihnen 250 Stück Artikel 123456789 zum Preis von 1.234,56 € netto an.
+Die Lieferung erfolgt in KW 45, Lieferschein 400123987, Charge 20261023A.
+Bestellnummer 987654321, Rechnungsbetrag 12.345,67 EUR, Skonto 2 % bei Zahlung in 10 Tagen.
+Softwareversion 3.2.1, Firmware 10.4.2.7, Seriennummer SN 2024-11-0042.
+Die Prüfung ergab 98,7 % Übereinstimmung bei 1500 Proben (Studie 2023, Tabelle 4).
+ISO 13485:2016 und IVDR 2017/746 werden eingehalten. Zimmer 2.14, Gebäude B.
+Projektcode ABC1234567 bleibt intern. Die Zahl 12345678901 ist eine Losgröße.
+Meeting am Montag im Konferenzraum, Agenda folgt.

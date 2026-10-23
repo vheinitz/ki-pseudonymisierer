@@ -1,0 +1,60 @@
+{
+  "_quelle": "2026-10-23, Testakte des Nutzers (fiktive Daten). Auftrag: „Bitte den Test als Benchmarkdaten übernehmen für spätere UTs“",
+  "_format": "must_mask: Zeichenfolgen, die nach dem Pseudonymisieren nicht mehr im Text stehen dürfen (bei mehrdeutigen Werten mit Kontext, z. B. „CVC 123“). must_keep: Zeichenfolgen ohne Personenbezug, die unverändert bleiben müssen. known_gaps: derzeit bekannte Lücken – der Test meldet sie, schlägt aber nicht fehl; ist eine behoben, meldet er das, damit sie in must_mask/must_keep wandert.",
+  "text": "kundenakte.txt",
+  "must_mask": [
+    "Johanna Weißenberger-Kowalski", "14.03.1987", "Bad Kreuznach", "Lindenstraße 42a", "55232 Alzey",
+    "06731 4987321", "+49 171 2345678", "+49 (0)6131 / 98 76 54-3",
+    "johanna.weissenberger@example.com", "j.kowalski+newsletter@mail.example.org", "weissenberger-beratung",
+    "deutsch-polnisch", "römisch-katholisch", "Markus Kowalski", "(Lena", "und Tim",
+    "86 095 742 719", "27/123/45678", "12 140387 W 012", "L01X00T47", "C01X00T47", "B072RRE2I55",
+    "A123456780", "AZ-JW 1987", "DE89 3704 0044 0532 0130 00", "4111 1111 1111 1111", "CVC 123",
+    "5555-5555-5555-4444", "3782 822463 10005", "Rheinhessen Analytik", "Personalnummer 004711", "DE123456789",
+
+    "6. Oktober 2026", "14:30", "Frau Weißenberger-Kowalski", "06731-4987321", "02.11.1984", "1. Januar 2027",
+    "Maximilianstraße 17", "80539", "markus.kowalski@example.net", "0151 98765432", "Friedrich Albrecht",
+    "Diabetes", "Metformin", "123456601", "12.11.2026", "192.0.2.146", "198.51.100.23",
+    "2001:db8:85a3::8a2e:370:7334", "00:1A:2B:3C:4D:5E", "jweissenberger87", "Sommer2026!",
+    "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa",
+
+    "Michael J. Thompson", "July 4, 1979", "Chicago", "1234 Elm Street", "Springfield", "(555) 010-4477",
+    "+1-212-555-0198", "mike.thompson@example.com", "536-22-8726", "912-70-1234", "340020013",
+    "T512-3456-7890", "3456-7890", "000123456789", "021000021", "AB1234567", "Democratic Party",
+    "Irish-American", "Emily Clarke", "221B Baker Street", "NW1 6XE", "+44 20 7946 0958", "07700 900123",
+    "943 476 5919", "JG 10 37 59 A", "GB82 WEST 1234 5698 7654 32",
+
+    "Carlos García López", "Calle Mayor 10", "12345678Z", "X1234567L", "Mario Rossi", "Via Roma 1",
+    "RSSMRA85T10A562S", "07643520567", "CA00000AA", "YA1234567", "Anna Nowak", "ul. Długa 5", "44051401359",
+    "Matti Virtanen", "131052-308T", "Tan Wei Ming", "S1234567D", "201912345K", "Olivia Smith", "1 George St",
+    "51 824 753 556", "004 085 616", "123 456 782", "2123 45670 1", "Rahul Sharma", "ABCPE1234F",
+    "2345 6789 0124", "ABC1234567", "J8369854", "MH 12 AB 1234", "Kim Min-jun", "900101-1234567",
+    "Somchai Jaidee", "1-1017-00203-45-1",
+
+    "Klaus Bergmann", "23.05.1962", "+49 30 12345678", "k.bergmann@example.com", "DE02 1203 0000 0000 2020 51",
+    ";Berlin", "Sabine Hoffmann-Yilmaz", "30.09.1990", "0711 2233445", "sabine.hy@example.org",
+    "DE02 5001 0517 0137 0750 30", ";Stuttgart", "Ahmet Yılmaz", "01.01.1975", "+49 221 9988776",
+    "ahmet.yilmaz@example.net", "DE02 1001 0010 0006 8201 01", ";Köln",
+
+    "peter müller", "Frau Paris", "aus Paris", "Herrn Berlin", "Herr Wolf", "Frau Sommer", "004917123456789",
+    "anna (at) example", "4111111111111111", "4111 1111 1111 1112", "DE00370400440532013000", "Dr. Albrecht",
+    "+49 6131 555123", "12.11. um", "9 Uhr"
+  ],
+  "must_keep": [
+    "im Sommer", "Artikelnummer 2026-10-23-001", "Version 1.2.3.4", "Bestellung #4711", "Raum 0.42",
+    "ISBN 978-3-16-148410-0", "Name;Geburtsdatum;Telefon;E-Mail;IBAN;Stadt", "INTERNATIONALE IDENTIFIKATOREN",
+    "GESPRÄCHSNOTIZ (Fließtext)", "STAMMDATEN"
+  ],
+  "known_gaps": {
+    "must_mask": {
+      "COBADEFFXXX": "BIC kennzeichnet die Bank, nicht die Person – bewusst nicht ersetzt",
+      "Apt 5B": "Adresszusatz nach der Straße wird nicht zur Anschrift gezählt",
+      "Große Bleiche 8": "Straßenname ohne Straßen-Endung, NER erkennt ihn nicht",
+      "dreiundzwanzigsten Oktober zweitausendsechsundzwanzig": "Datum in Worten",
+      "5.840 €": "Gehalt – vertraulich, aber kein Identifikator; über Ersetzungsliste/Regex lösbar",
+      "08/29": "Ablaufdatum der Kreditkarte"
+    },
+    "must_keep": {
+      "RANDFÄLLE (Edge Cases)": "Überschrift wird von GLiNER als ORGANIZATION markiert (harmloser Fehltreffer)"
+    }
+  }
+}

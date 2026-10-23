@@ -1,0 +1,18 @@
+{
+  "_quelle": "2026-10-23, Gegenprobe zur Kundenakte: Geschäftstext ohne Personendaten – prüft Fehltreffer der Kennnummern-Erkenner.",
+  "text": "geschaeftstext.txt",
+  "must_mask": [],
+  "must_keep": [
+    "Angebot 2026-0815", "Artikel 123456789", "1.234,56 €", "KW 45", "Lieferschein 400123987",
+    "Charge 20261023A", "Bestellnummer 987654321", "12.345,67 EUR", "Softwareversion 3.2.1",
+    "Firmware 10.4.2.7", "SN 2024-11-0042", "98,7 %", "ISO 13485:2016", "IVDR 2017/746",
+    "Projektcode ABC1234567", "Meeting am Montag"
+  ],
+  "known_gaps": {
+    "must_mask": {},
+    "must_keep": {
+      "Zimmer 2.14, Gebäude B": "GLiNER hält Raumangaben für eine Anschrift",
+      "12345678901": "libphonenumber hält die elfstellige Zahl für eine Telefonnummer"
+    }
+  }
+}

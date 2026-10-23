@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PII-Anonymisierung</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header>
+  <h1>PII-Anonymisierung</h1>
+  <nav class="tabs" role="tablist">
+    <button role="tab" data-tab="anon" aria-selected="true">Anonymisieren</button>
+    <button role="tab" data-tab="details" aria-selected="false">Einstellungen &amp; Details</button>
+    <button role="tab" data-tab="rules" aria-selected="false">Ersetzungsliste</button>
+    <button role="tab" data-tab="profiles" aria-selected="false">Profile</button>
+    <button role="tab" data-tab="gateway" aria-selected="false">Gateway</button>
+  </nav>
+  <span id="main-summary" class="hint"></span>
+</header>
+
+<main id="tab-anon">
+  <p class="hint step">
+    <strong>1.</strong> Text einfügen oder Datei laden → <strong>Anonymisieren</strong> → Ausgabe mit
+    <strong>Alles kopieren</strong> in die KI einfügen. Der Hinweis für die KI steht schon am Anfang.
+  </p>
+  <section class="io">
+    <div class="pane">
+      <div class="pane-head">
+        <h2>Eingabe <span id="input-file" class="badge"></span></h2>
+        <button class="secondary" data-upload="input" title="{{ upload_types }}">Datei …</button>
+        <button id="run" data-fail-label="fehlgeschlagen" title="Anonymisieren, Zuordnung speichern und Hinweis für die KI voranstellen">Anonymisieren</button>
+      </div>
+      <textarea id="input" spellcheck="false">Muster Software GmbH, Hauptstraße 5, 23843 Bad Oldesloe
+
+Frau Erika Mustermann
+Charlotte-Posenenske-Straße 12
+65197 Wiesbaden
+
+Rechnung Nr. 2026-0815
+Übertrag 08/2026 7,20 €
+Fälliger Betrag 7,20 €
+
+Bei Fragen erreichen Sie Herrn Klaus Schmidt unter Tel. 04531 123456 oder rechnung@muster-software.de.
+IBAN: DE89 3704 0044 0532 0130 00</textarea>
+    </div>
+    <div class="pane">
+      <div class="pane-head">
+        <h2>Ausgabe für die KI</h2>
+        <span id="persist-status" class="status" hidden></span>
+        <button id="copy" data-fail-label="NICHT kopiert">Alles kopieren</button>
+        <button id="download" class="secondary" data-fail-label="nicht gespeichert">Speichern</button>
+        <button id="decrypt" class="secondary" hidden>Entschlüsseln</button>
+      </div>
+      <pre id="output" tabindex="0"></pre>
+      <div id="release-box" class="warning" hidden></div>
+      <div id="error" class="error" hidden></div>
+      <div id="warnings" class="warning" hidden></div>
+    </div>
+  </section>
+
+  <section class="agent-bar">
+    <button id="ask-agent" data-fail-label="KI-Anfrage fehlgeschlagen" data-error-target="#agent-error"
+            title="Ausgabe (Hinweis + anonymisierter Text) an den gewählten Agenten senden; die Antwort erscheint unten">2. KI-Anfrage</button>
+    <label>Agent <select id="agent"></select></label>
+    <label>Sitzung <select id="agent-session"></select></label>
+    <span id="agent-status" class="status"></span>
+    <span class="hint">… oder Ausgabe kopieren und selbst in eine KI einfügen.</span>
+  </section>
+  <div id="agent-error" class="error" hidden></div>
+
+  <p class="hint step">
+    <strong>3.</strong> Antwort der KI (oder von ihr erzeugten Text) unten einfügen oder als Datei laden →
+    rechts erscheinen die Originaldaten.
+  </p>
+  <section class="io">
+    <div class="pane">
+      <div class="pane-head">
+        <h2>Antwort der KI <span id="restore-file" class="badge"></span></h2>
+        <button class="secondary" data-upload="restore" title="{{ upload_types }}">Datei …</button>
+      </div>
+      <textarea id="restore-input" spellcheck="false" placeholder="Antwort der KI hier einfügen – Platzhalter wie <PERSON:3f9a2c71b04e> werden durch die gespeicherten Originaldaten ersetzt."></textarea>
+    </div>
+    <div class="pane">
+      <div class="pane-head">
+        <h2>Mit Originaldaten <span id="restore-summary" class="badge"></span></h2>
+        <button id="restore-copy" data-fail-label="NICHT kopiert" data-error-target="#restore-error">Alles kopieren</button>
+        <button id="restore-download" class="secondary" data-fail-label="nicht gespeichert" data-error-target="#restore-error">Speichern</button>
+      </div>
+      <pre id="restore-output" tabindex="0"></pre>
+      <div id="restore-problems" class="warning" hidden></div>
+      <div id="restore-error" class="error" hidden></div>
+    </div>
+  </section>
+</main>
+
+<main id="tab-details" hidden>
+  <section class="settings-bar">
+    <label title="Voreinstellungen und bekannte Personen, die stehen bleiben dürfen">Profil <select id="profile"><option value="">Standard</option></select></label>
+    <label>Engine <select id="engine"></select></label>
+    <label>Sprache <select id="language"></select></label>
+    <span id="auto-options">
+      <label>Blöcke <select id="granularity"><option value="line">Zeilen</option><option value="sentence">Sätze</option></select></label>
+      <label title="für erkannte Sprachen ohne installiertes Modell">Rückfall <select id="fallback"></select></label>
+    </span>
+    <span id="engine-hint" class="hint"></span>
+  </section>
+  <section class="settings-bar">
+    <label class="inline" title="Bei jeder Änderung neu anonymisieren (Vorschau ohne Hinweis für die KI; übernommen wird erst mit „Anonymisieren“, Kopieren oder Speichern)"><input type="checkbox" id="auto"> Live-Vorschau</label>
+    <label class="inline" title="Eingabe, Ausgabe und markierten Originaltext gemeinsam scrollen"><input type="checkbox" id="sync-scroll" checked> Scrollen koppeln</label>
+    <label class="inline">Hinweis für die KI <select id="prompt-lang"><option value="de">Deutsch</option><option value="en">Englisch</option></select></label>
+    <label class="inline" title="Sprache, in der Begriffe der Ersetzungsliste beim Zurückführen eingesetzt werden">Zielsprache beim Zurückführen
+      <select id="restore-language"><option value="auto">automatisch</option></select></label>
+    <button id="new-ids" class="link" title="Neuen Sitzungsschlüssel erzeugen: alle Platzhalter bekommen neue IDs">neue IDs</button>
+    <span class="hint">Gespeicherte Zuordnungen: <span id="mapping-stats">–</span> (verschlüsselt in <code>data/</code>)</span>
+  </section>
+
+  <details id="deny-box" class="settings-bar deny-box" open>
+    <summary>Immer erkennen (Deny-List) <span id="deny-count" class="badge"></span> <span id="deny-status" class="status"></span></summary>
+    <p class="hint">
+      Namen, die die Modelle übersehen (seltene oder fremdsprachige Namen, Tabellen ohne Satzkontext), werden hier
+      immer ersetzt – unabhängig von Modell, Score-Schwelle und „nur Eigennamen“. Eine Zeile je Eintrag; ohne Typ gilt
+      PERSON, sonst z.&nbsp;B. <code>ORGANIZATION: Acme</code>. Groß-/Kleinschreibung egal, nur ganze Wörter,
+      Leerzeichen passt auch auf Tabulatoren. Tipp: Nachname und Vorname einzeln eintragen, dann passt jede Reihenfolge.
+      Die Liste enthält selbst personenbezogene Daten (gespeichert in <code>data/deny_list.json</code>).
+    </p>
+    <textarea id="deny-list" rows="6" spellcheck="false" placeholder="Mihalache&#10;Ianis&#10;ORGANIZATION: Muster Software"></textarea>
+  </details>
+
+  <details id="prompt-box">
+    <summary>Hinweis für die KI (wird der Ausgabe vorangestellt) <span id="prompt-count" class="badge"></span></summary>
+    <textarea id="prompt" rows="12" readonly></textarea>
+  </details>
+
+  <details class="findings" open>
+    <summary>Fundstellen <span id="count" class="badge"></span></summary>
+    <div id="highlight" class="highlight"></div>
+    <div id="lang-blocks" class="table-scroll" hidden>
+    <h3>Sprachblöcke</h3>
+    <table>
+      <thead><tr><th>Block</th><th>erkannt</th><th>Konfidenz</th><th>verwendet</th></tr></thead>
+      <tbody id="lang-blocks-body"></tbody>
+    </table>
+    </div>
+    <h3>Entitäten</h3>
+    <div class="table-scroll">
+    <table>
+      <thead><tr><th>Entität</th><th>Text</th><th>Score</th><th>Erkenner</th><th>Muster</th><th>Kontext</th><th>Position</th></tr></thead>
+      <tbody id="findings-body"></tbody>
+    </table>
+    </div>
+  </details>
+
+  <section class="controls">
+    <details open>
+      <summary>Erkennung (Analyzer)</summary>
+      <label class="inline rules-toggle"><input type="checkbox" id="apply-rules" checked> Ersetzungsliste anwenden
+        <span id="rules-count" class="badge"></span> <button class="link" data-goto="rules">bearbeiten</button></label>
+      <label class="inline rules-toggle" title="Erkannte Personen auch an weiteren Stellen ersetzen: voller Name ohne Anrede und Nachname allein"><input type="checkbox" id="propagate-names" checked> weitere Nennungen erkannter Personen ersetzen</label>
+      <label class="inline rules-toggle" title="Treffer der NER-Modelle verwerfen, die keine Eigennamen sind: Rollen wie „der Geschäftsführer“, Pronomen wie „er“, Gattungswörter wie „die Firma“ (Prüfung über die Wortart)"><input type="checkbox" id="names-only" checked> nur Eigennamen</label>
+      <label class="inline rules-toggle" title="In Tabellen (Tabulator oder mehrere Leerzeichen als Trenner) jede Zelle unter einer Überschrift wie „Name“, „Vorname“, „Nachname“, „Schüler“, „Patient“ als Person ersetzen"><input type="checkbox" id="table-names" checked> Namensspalten in Tabellen</label>
+      <div class="grid">
+        <div>
+          <div class="row-head">
+            <h3>Entitäten</h3>
+            <button class="link" data-select="all">alle</button>
+            <button class="link" data-select="none">keine</button>
+          </div>
+          <div id="entities" class="checklist"></div>
+        </div>
+        <div>
+          <h3>Score-Schwelle <output id="threshold-value">0.35</output></h3>
+          <input type="range" id="threshold" min="0" max="1" step="0.05" value="0.35">
+          <h3>Allow-List <small>(nie anonymisieren, eine Zeile je Eintrag)</small></h3>
+          <textarea id="allow-list" rows="3"></textarea>
+          <label class="inline">Abgleich
+            <select id="allow-list-match"><option value="exact">exakt</option><option value="regex">Regex</option></select>
+          </label>
+          <h3>Kontextwörter <small>(erhöhen den Score passender Fundstellen)</small></h3>
+          <textarea id="context" rows="2"></textarea>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>Eigene Erkenner (nur für diese Anfrage)</summary>
+      <p class="hint">Regex: ein Muster je Erkenner. Deny-List: feste Begriffe, kommagetrennt. Der Entitätsname ist frei wählbar, z.&nbsp;B. <code>PATIENT_ID</code>.</p>
+      <table class="edit">
+        <thead><tr><th>Art</th><th>Entität</th><th>Muster / Begriffe</th><th>Score</th><th></th></tr></thead>
+        <tbody id="custom-body"></tbody>
+      </table>
+      <button id="add-custom" class="secondary">+ Erkenner</button>
+    </details>
+
+    <details open>
+      <summary>Anonymisierung (Operatoren)</summary>
+      <p class="hint">„Platzhalter mit ID“ ist umkehrbar: Die Zuordnung wird beim Übernehmen (Anonymisieren, Kopieren, Speichern) gespeichert und unter „2. KI-Antwort zurückführen“ wieder eingesetzt. Alle anderen Operatoren sind endgültig (außer „verschlüsseln“).</p>
+      <h3>Standard-Operator</h3>
+      <div id="default-operator" class="operator"></div>
+      <h3>Abweichend je Entität</h3>
+      <table class="edit">
+        <thead><tr><th>Entität</th><th>Operator</th><th>Parameter</th><th></th></tr></thead>
+        <tbody id="entity-ops-body"></tbody>
+      </table>
+      <button id="add-entity-op" class="secondary">+ Regel</button>
+    </details>
+  </section>
+</main>
+
+<main id="tab-rules" hidden>
+  <section class="rules-panel">
+    <div class="pane-head">
+      <h2>Ersetzungsliste <span id="rules-summary" class="badge"></span></h2>
+      <input type="search" id="rules-filter" placeholder="Filtern …">
+      <span id="rules-status" class="status"></span>
+      <button id="rules-add" class="secondary">+ Regel</button>
+      <button id="rules-import" class="secondary">CSV importieren</button>
+      <a id="rules-export" class="button secondary" href="/api/rules/export">CSV exportieren</a>
+    </div>
+    <p class="hint">
+      Feste Begriffe, die vor der Erkennung ersetzt werden – auch innerhalb von Wörtern
+      („HUGOleaner“ → „&lt;BOBO:4711&gt;leaner“), sofern „ganzes Wort“ aus ist. Ersatz als Tag
+      <code>&lt;NAME:Nummer&gt;</code> (Nummer wird vergeben, wenn leer) oder als Klartext, wenn er eindeutig genug ist.
+      Beim Wiederherstellen wird der Begriff in der Sprache der KI-Antwort eingesetzt: Original in der
+      Sprache des Suchbegriffs, sonst die Übersetzung, sonst das Original. Kommt der Begriff in Zusammensetzungen
+      vor, als Übersetzung nur den Begriff selbst angeben.
+      <strong>Ersatz nachträglich zu ändern oder Regeln zu löschen macht ältere KI-Antworten unauflösbar – besser deaktivieren.</strong>
+    </p>
+    <div id="rules-error" class="error" hidden></div>
+    <div class="table-scroll rules-scroll">
+      <table class="edit rules">
+        <thead><tr>
+          <th title="aktiv">an</th><th>Suchbegriff</th><th>Sprache</th>
+          <th title="Groß-/Kleinschreibung beachten">Aa</th><th title="nur ganze Wörter">Wort</th>
+          <th>Ersatz</th><th>Vorschau</th><th>Übersetzungen</th><th></th>
+        </tr></thead>
+        <tbody id="rules-body"></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<main id="tab-profiles" hidden>
+  <section class="rules-panel">
+    <div class="pane-head">
+      <h2>Profile</h2>
+      <select id="profiles-select"></select>
+      <span id="profiles-status" class="status"></span>
+      <button id="profiles-new" class="secondary">+ Profil</button>
+      <button id="profiles-copy" class="secondary">Duplizieren</button>
+      <button id="profiles-delete" class="secondary">Löschen</button>
+    </div>
+    <p class="hint">
+      Ein Profil wird in „Anonymisieren“ manuell gewählt. Es setzt Score-Schwelle und Entitäten als Voreinstellung
+      (sichtbar und änderbar) und gibt Namen aus „Bekannte Personen“ frei – aber nur, wenn das Modell den Namen
+      mindestens einmal im Kontext als bekannte Person einordnet und <em>keine</em> Nennung im Text einen
+      Sperrhinweis hat (dann bleiben alle Nennungen ersetzt). Nur Verstorbene eintragen: Für sie gilt die DSGVO nicht (ErwG 27).
+    </p>
+    <div id="profiles-error" class="error" hidden></div>
+    <div id="profile-form" class="profile-form">
+      <label>Name <input data-p="name"></label>
+      <label class="wide">Beschreibung <input data-p="description"></label>
+      <label>Score-Schwelle <input data-p="score_threshold" type="number" min="0" max="1" step="0.05" placeholder="keine Vorgabe"></label>
+      <div class="wide"><h3>Abgeschaltete Entitäten</h3><div id="profile-entities-off" class="checklist"></div></div>
+      <div class="wide"><h3>Freigabe gilt für</h3><div id="profile-applies-to" class="checklist"></div></div>
+      <label class="wide">Bekannte Personen <small>(eine je Zeile, Schreibweisen mit „|“ trennen: <code>Isaac Newton | Newton</code>)</small>
+        <textarea data-p="known_persons" rows="10"></textarea></label>
+      <label class="wide">Bestätigung durch das Modell <small>(GLiNER-Labels, kommagetrennt; leer = ohne Bestätigung)</small>
+        <input data-p="confirm_labels"></label>
+      <label>Mindest-Score der Bestätigung <input data-p="confirm_threshold" type="number" min="0" max="1" step="0.05"></label>
+      <label>Sperrhinweise direkt am Namen <small>(± 3 Wörter, einer je Zeile)</small>
+        <textarea data-p="blocking_cues" rows="8"></textarea></label>
+      <label>Sperrhinweise in derselben Zeile <small>(einer je Zeile)</small>
+        <textarea data-p="blocking_cues_line" rows="8"></textarea></label>
+      <label>Zeilenfenster (Zeichen) <input data-p="cue_window" type="number" min="0" step="10"></label>
+    </div>
+  </section>
+</main>
+
+<main id="tab-gateway" hidden>
+  <section class="rules-panel">
+    <div class="pane-head">
+      <h2>LLM-Gateway <span id="gw-summary" class="badge"></span></h2>
+      <span id="gw-status" class="status"></span>
+      <button id="gw-log-on" class="secondary">Protokoll an</button>
+      <button id="gw-log-off" class="secondary">Protokoll aus</button>
+      <button id="gw-refresh" class="secondary">Aktualisieren</button>
+    </div>
+    <p class="hint">
+      Phase 1: Das Gateway lässt alles unverändert durch und protokolliert die Kommunikation
+      (ohne Zugangsdaten) in <code>data/gateway.sqlite</code>. Was davon privat war, prüft
+      <code>gateway_analyze.py</code> in einem eigenen Prozess. Claude Code nutzt das Gateway, wenn es mit
+      <code>ANTHROPIC_BASE_URL=<span id="gw-url"></span> claude</code> gestartet wird.
+    </p>
+    <div id="gw-error" class="error" hidden></div>
+    <div class="row-head">
+      <h3>Rausgegangen</h3>
+      <label class="inline">Typ <select id="gw-type"><option value="">alle</option></select></label>
+      <label class="inline"><input type="checkbox" id="gw-hide-system"> nur Nutzerinhalte (ohne Systemprompt/-kontext)</label>
+      <label class="inline">Mindest-Score <input type="number" id="gw-min-score" value="0.5" min="0" max="1" step="0.05"></label>
+      <input type="search" id="gw-filter" placeholder="Filtern …">
+    </div>
+    <div class="table-scroll gw-scroll">
+      <table>
+        <thead><tr><th>Typ</th><th>Text</th><th>Score</th><th title="in wie vielen Anfragen/Antworten enthalten">gesendet</th><th>Blockarten</th><th>zuerst</th></tr></thead>
+        <tbody id="gw-findings"></tbody>
+      </table>
+    </div>
+    <div id="gw-block" hidden>
+      <h3>Fundstelle im Kontext <span id="gw-block-kind" class="badge"></span></h3>
+      <pre id="gw-block-text" class="highlight"></pre>
+    </div>
+    <details>
+      <summary>Letzte Austausche</summary>
+      <div class="table-scroll gw-scroll">
+        <table>
+          <thead><tr><th>#</th><th>Zeit</th><th>Pfad</th><th>Status</th><th>Modell</th><th>Dauer</th><th>neue Blöcke</th><th>Tokens ein/aus</th></tr></thead>
+          <tbody id="gw-exchanges"></tbody>
+        </table>
+      </div>
+    </details>
+  </section>
+</main>
+
+<datalist id="lang-codes">
+  <option value="de"><option value="en"><option value="fr"><option value="es"><option value="it">
+  <option value="nl"><option value="pl"><option value="pt"><option value="cs"><option value="da">
+  <option value="sv"><option value="tr"><option value="ru"><option value="uk"><option value="zh"><option value="ja">
+</datalist>
+
+<template id="tpl-rule">
+  <tr>
+    <td><input type="checkbox" data-r="enabled" checked></td>
+    <td><input data-r="search" placeholder="HUGO" class="wide"></td>
+    <td><input data-r="language" value="de" list="lang-codes" size="3"></td>
+    <td><input type="checkbox" data-r="case_sensitive" checked></td>
+    <td><input type="checkbox" data-r="whole_word"></td>
+    <td class="rule-replacement">
+      <select data-r="format"><option value="tag">Tag</option><option value="plain">Klartext</option></select>
+      <span data-show="tag">&lt;<input data-r="name" placeholder="NAME" title="Pflichtfeld: Name des Tags, z. B. FIRMA" size="8">:<input data-r="number" placeholder="auto" size="6">&gt;</span>
+      <span data-show="plain"><input data-r="text" placeholder="Ersatztext" size="14"></span>
+    </td>
+    <td><code data-preview></code></td>
+    <td class="rule-translations"><span data-translations></span><button class="link" data-add-translation>+ Sprache</button></td>
+    <td><button class="link" data-remove-rule title="Regel löschen">✕</button></td>
+  </tr>
+</template>
+
+<input type="file" id="file-input" accept="{{ upload_types }}" hidden>
+<input type="file" id="rules-file" accept=".csv,text/csv" hidden>
+
+<template id="tpl-custom">
+  <tr>
+    <td><select data-f="kind"><option value="regex">Regex</option><option value="deny_list">Deny-List</option></select></td>
+    <td><input data-f="entity" placeholder="ENTITY"></td>
+    <td><input data-f="value" class="wide" placeholder="\b[A-Z]{2}\d{6}\b"></td>
+    <td><input data-f="score" type="number" min="0" max="1" step="0.05" value="0.8"></td>
+    <td><button class="link" data-remove>✕</button></td>
+  </tr>
+</template>
+
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

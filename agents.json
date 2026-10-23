@@ -1,0 +1,18 @@
+[
+  {
+    "id": "claude",
+    "label": "Claude Code (ohne Werkzeuge)",
+    "type": "claude",
+    "executable": "claude",
+    "args": ["--tools", ""],
+    "timeout": 600
+  },
+  {
+    "id": "pi",
+    "label": "pi (Standardmodell, ohne Werkzeuge)",
+    "type": "pi",
+    "executable": "pi",
+    "args": ["--no-tools", "--no-context-files", "--no-extensions", "--no-skills", "--no-prompt-templates"],
+    "timeout": 600
+  }
+]

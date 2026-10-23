@@ -1,0 +1,31 @@
+# Sprechertext für pres.webm – Timecodes beziehen sich auf das Originalvideo.
+#   m:ss | Text     Satz beginnt bei m:ss, Video läuft weiter (Überlauf → Standbild beim nächsten Einsatz)
+#   m:ss ! | Text   Bild bleibt bei m:ss stehen, solange der Text gesprochen wird
+# Ereignisse im Original: 0:07 Liste eingefügt · 0:24 Anonymisieren · 0:27 Ausgabe ·
+# 1:06 pi gewählt · 1:16–1:35 pi arbeitet · 1:55 Claude gewählt · 2:00–2:13 Claude arbeitet
+
+# Vorgeschichte – Standbild auf der leeren Seite
+0:00 ! | Ich tüftle gerade nebenbei an einem Anonymisierer für KI-Anfragen. Die Idee: Firmendaten, und vor allem Namen, sollen nicht unnötig bei einem KI-Anbieter landen. Ich zeige das an einer fiktiven Klassenliste. Denn auch als Elternbeirat und Kassenwart ist so ein Werkzeug sehr nützlich.
+
+0:07 | Ich füge also eine fiktive Klassenliste ein und frage, welche Kinder die Klassenfahrt noch nicht vollständig bezahlt haben.
+0:16 | In der Liste stehen Vor- und Nachnamen von zwanzig Kindern, dazu die einzelnen Zahlungen.
+
+0:24 | Ein Klick auf Anonymisieren. Das passiert vollständig lokal, auf meinem Rechner. Wie genau, erzähle ich gleich.
+0:33 | Oben steht ein Hinweis für die KI: Sie soll die Platzhalter unverändert übernehmen und keine echten Angaben erraten. Der Hinweis wird einfach mitkopiert.
+0:42 | Darunter der eigentliche Text. Jeder Name ist durch einen eigenen Platzhalter ersetzt, mit Typ und zufälliger Kennung.
+0:50 | Genau genommen ist das eine Pseudonymisierung: Die Zuordnung bleibt verschlüsselt hier auf dem Rechner, damit sich die Antwort später zurückübersetzen lässt. Die Beträge bleiben stehen, mit ihnen soll die KI ja rechnen.
+
+1:05 | Schritt zwei: Die Anfrage geht direkt aus der Anwendung an einen KI-Agenten. Ich wähle pi, und „ohne Sitzung“. Dann wird beim Agenten nichts gespeichert.
+1:16 | Der Agent läuft im Hintergrund, ohne Werkzeuge, und sieht nur den pseudonymisierten Text. Während er arbeitet, kurz zur Technik. Grundlage ist Microsoft Presidio, ein Open-Source-Framework zum Erkennen personenbezogener Daten. Dazu kommen lokale neuronale Netze: spaCy-Modelle für Deutsch und Englisch, und GLiNER, ein Transformer-Modell, das Namen, Firmen und Orte auch im Satzzusammenhang erkennt.
+
+1:36 | Nach knapp zwanzig Sekunden ist die Antwort da. Links steht sie so, wie die KI sie geschrieben hat, nur mit Platzhaltern. Rechts sind die Platzhalter automatisch wieder durch die echten Namen ersetzt.
+1:48 | Die Sprache bestimmt ein fastText-Modell abschnittsweise, so werden auch gemischtsprachige Texte richtig behandelt. Firmen erkennt die Anwendung zusätzlich an Rechtsformen wie GmbH oder AG, Adressen an Straße, Hausnummer und Postleitzahl.
+
+1:54 | Zum Vergleich dasselbe mit Claude Code, wieder ohne Sitzung.
+2:00 | Was als schützenswert gilt, lässt sich einstellen: Personen, Firmen, Adressen, E-Mail-Adressen, Telefonnummern, IBAN und mehr. Exotische Namen oder firmeninterne Produktnamen trage ich einfach in eine Liste ein. Sie werden dann immer ersetzt, auf Wunsch sogar mitten im Wort und mit Übersetzungen.
+
+2:14 | Claude liefert eine Tabelle und eine Zusammenfassung: Vierzehn von zwanzig Kindern haben noch nicht vollständig bezahlt, insgesamt sind sechstausenddreihundert Euro offen. Auch hier stehen die Namen wieder an der richtigen Stelle. Die KI hat sie nie gesehen.
+2:31 | Ein Schieberegler in den Einstellungen legt fest, ab welcher Sicherheit eine Fundstelle ersetzt wird: Je niedriger, desto gründlicher. Und vor dem Senden kann ich mir alle erkannten Angaben in einer Tabelle ansehen und prüfen.
+
+# Schluss – Standbild am Ende
+2:44 ! | Und selbstverständlich ist auch dieses Werkzeug zusammen mit Claude entstanden, von der ersten Zeile bis zu dieser Vertonung.

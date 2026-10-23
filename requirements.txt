@@ -1,0 +1,15 @@
+presidio_analyzer
+presidio_anonymizer
+flask
+gunicorn
+requests           # LLM-Gateway (gateway.py)
+fasttext-predict   # Sprachidentifikation; Modell: models/lid/lid.176.bin
+# GLiNER-Engine (Transformer-NER). torch vorher als CPU-Build installieren, sonst kommt CUDA mit:
+#   .venv/bin/pip install torch --index-url https://download.pytorch.org/whl/cpu
+gliner
+sentencepiece      # Tokenizer von mDeBERTa (gliner_multi_pii-v1)
+pypdf              # Datei-Upload: PDF
+python-docx        # Datei-Upload: .docx (.doc/.odt/.rtf über LibreOffice -> .docx)
+cryptography       # Verschlüsselung der Zuordnungstabelle (kommt mit presidio_anonymizer)
+# spaCy-Modelle: .venv/bin/python -m spacy download <modell>
+#   en_core_web_lg, de_core_news_lg (spaCy-Engine), en_core_web_sm, de_core_news_sm (GLiNER-Engine)

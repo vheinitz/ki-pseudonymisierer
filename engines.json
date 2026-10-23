@@ -1,0 +1,313 @@
+[
+  {
+    "id": "presidio-gliner",
+    "label": "Presidio + GLiNER (Transformer)",
+    "nlp_configuration": {
+      "nlp_engine_name": "spacy",
+      "models": [
+        {
+          "lang_code": "en",
+          "model_name": "en_core_web_sm"
+        },
+        {
+          "lang_code": "de",
+          "model_name": "de_core_news_sm"
+        }
+      ],
+      "ner_model_configuration": {
+        "model_to_presidio_entity_mapping": {
+          "PER": "PERSON",
+          "PERSON": "PERSON",
+          "NORP": "NRP",
+          "FAC": "LOCATION",
+          "LOC": "LOCATION",
+          "GPE": "LOCATION",
+          "ORG": "ORGANIZATION",
+          "DATE": "DATE_TIME",
+          "TIME": "DATE_TIME"
+        },
+        "labels_to_ignore": [
+          "MISC",
+          "CARDINAL",
+          "EVENT",
+          "LANGUAGE",
+          "LAW",
+          "MONEY",
+          "ORDINAL",
+          "PERCENT",
+          "PRODUCT",
+          "QUANTITY",
+          "WORK_OF_ART"
+        ],
+        "low_score_entity_names": [
+          "ORGANIZATION"
+        ],
+        "low_confidence_score_multiplier": 0.5
+      }
+    },
+    "additional_recognizers": {
+      "*": [
+        "LabeledValueRecognizer",
+        "SensitiveTermsRecognizer",
+        "WrittenDateRecognizer",
+        "ObfuscatedEmailRecognizer",
+        "CreditCardRecognizer",
+        "IbanRecognizer",
+        "EsNifRecognizer",
+        "EsNieRecognizer",
+        "ItFiscalCodeRecognizer",
+        "ItVatCodeRecognizer",
+        "ItIdentityCardRecognizer",
+        "ItPassportRecognizer",
+        "ItDriverLicenseRecognizer",
+        "PlPeselRecognizer",
+        "FiPersonalIdentityCodeRecognizer",
+        "SgFinRecognizer",
+        "SgUenRecognizer",
+        "AuAbnRecognizer",
+        "AuAcnRecognizer",
+        "AuTfnRecognizer",
+        "AuMedicareRecognizer",
+        "InPanRecognizer",
+        "InAadhaarRecognizer",
+        "InPassportRecognizer",
+        "KrRrnRecognizer",
+        "ThTninRecognizer",
+        "UkNinoRecognizer",
+        "AbaRoutingRecognizer",
+        "MedicalLicenseRecognizer"
+      ],
+      "de": [
+        "DeTaxIdRecognizer",
+        "DeTaxNumberRecognizer",
+        "DePassportRecognizer",
+        "DeIdCardRecognizer",
+        "DeSocialSecurityRecognizer",
+        "DeHealthInsuranceRecognizer",
+        "StrictDeKfzRecognizer",
+        "DeHandelsregisterRecognizer",
+        "DePlzRecognizer",
+        "DeLanrRecognizer",
+        "DeBsnrRecognizer",
+        "DeVatIdRecognizer",
+        "DeFuehrerscheinRecognizer",
+        "AddressRecognizer",
+        "LegalFormRecognizer",
+        {
+          "class": "SharedGLiNERRecognizer",
+          "params": {
+            "model_name": "urchade/gliner_multi_pii-v1",
+            "threshold": 0.4,
+            "entity_mapping": {
+              "person": "PERSON",
+              "organization": "ORGANIZATION",
+              "address": "ADDRESS",
+              "location": "LOCATION"
+            }
+          }
+        }
+      ],
+      "en": [
+        "AddressRecognizer",
+        "LegalFormRecognizer",
+        {
+          "class": "SharedGLiNERRecognizer",
+          "params": {
+            "model_name": "urchade/gliner_multi_pii-v1",
+            "threshold": 0.4,
+            "entity_mapping": {
+              "person": "PERSON",
+              "organization": "ORGANIZATION",
+              "address": "ADDRESS",
+              "location": "LOCATION"
+            }
+          }
+        }
+      ]
+    },
+    "remove_recognizers": [
+      "SpacyRecognizer"
+    ]
+  },
+  {
+    "id": "presidio-spacy",
+    "label": "Presidio + spaCy (vortrainiert)",
+    "nlp_configuration": {
+      "nlp_engine_name": "spacy",
+      "models": [
+        {
+          "lang_code": "en",
+          "model_name": "en_core_web_lg"
+        },
+        {
+          "lang_code": "de",
+          "model_name": "de_core_news_lg"
+        }
+      ],
+      "ner_model_configuration": {
+        "model_to_presidio_entity_mapping": {
+          "PER": "PERSON",
+          "PERSON": "PERSON",
+          "NORP": "NRP",
+          "FAC": "LOCATION",
+          "LOC": "LOCATION",
+          "GPE": "LOCATION",
+          "ORG": "ORGANIZATION",
+          "DATE": "DATE_TIME",
+          "TIME": "DATE_TIME"
+        },
+        "labels_to_ignore": [
+          "MISC",
+          "CARDINAL",
+          "EVENT",
+          "LANGUAGE",
+          "LAW",
+          "MONEY",
+          "ORDINAL",
+          "PERCENT",
+          "PRODUCT",
+          "QUANTITY",
+          "WORK_OF_ART"
+        ],
+        "low_score_entity_names": [
+          "ORGANIZATION"
+        ],
+        "low_confidence_score_multiplier": 0.5
+      }
+    },
+    "additional_recognizers": {
+      "*": [
+        "LabeledValueRecognizer",
+        "SensitiveTermsRecognizer",
+        "WrittenDateRecognizer",
+        "ObfuscatedEmailRecognizer",
+        "CreditCardRecognizer",
+        "IbanRecognizer",
+        "EsNifRecognizer",
+        "EsNieRecognizer",
+        "ItFiscalCodeRecognizer",
+        "ItVatCodeRecognizer",
+        "ItIdentityCardRecognizer",
+        "ItPassportRecognizer",
+        "ItDriverLicenseRecognizer",
+        "PlPeselRecognizer",
+        "FiPersonalIdentityCodeRecognizer",
+        "SgFinRecognizer",
+        "SgUenRecognizer",
+        "AuAbnRecognizer",
+        "AuAcnRecognizer",
+        "AuTfnRecognizer",
+        "AuMedicareRecognizer",
+        "InPanRecognizer",
+        "InAadhaarRecognizer",
+        "InPassportRecognizer",
+        "KrRrnRecognizer",
+        "ThTninRecognizer",
+        "UkNinoRecognizer",
+        "AbaRoutingRecognizer",
+        "MedicalLicenseRecognizer"
+      ],
+      "de": [
+        "DeTaxIdRecognizer",
+        "DeTaxNumberRecognizer",
+        "DePassportRecognizer",
+        "DeIdCardRecognizer",
+        "DeSocialSecurityRecognizer",
+        "DeHealthInsuranceRecognizer",
+        "StrictDeKfzRecognizer",
+        "DeHandelsregisterRecognizer",
+        "DePlzRecognizer",
+        "DeLanrRecognizer",
+        "DeBsnrRecognizer",
+        "DeVatIdRecognizer",
+        "DeFuehrerscheinRecognizer",
+        "LegalFormRecognizer",
+        "AddressRecognizer"
+      ],
+      "en": [
+        "LegalFormRecognizer",
+        "AddressRecognizer"
+      ]
+    }
+  },
+  {
+    "id": "custom-ner",
+    "label": "Eigenes NER-Modell (spaCy, models/custom-ner)",
+    "nlp_configuration": {
+      "nlp_engine_name": "spacy",
+      "models": [
+        {
+          "lang_code": "de",
+          "model_name": "models/custom-ner"
+        }
+      ],
+      "ner_model_configuration": {
+        "model_to_presidio_entity_mapping": {
+          "PER": "PERSON",
+          "PERSON": "PERSON",
+          "LOC": "LOCATION",
+          "ORG": "ORGANIZATION",
+          "DATE": "DATE_TIME",
+          "LOCATION": "LOCATION",
+          "ORGANIZATION": "ORGANIZATION",
+          "DATE_TIME": "DATE_TIME",
+          "ADDRESS": "ADDRESS"
+        },
+        "low_score_entity_names": [
+          "ORGANIZATION"
+        ],
+        "low_confidence_score_multiplier": 0.5
+      }
+    },
+    "additional_recognizers": {
+      "*": [
+        "LabeledValueRecognizer",
+        "SensitiveTermsRecognizer",
+        "WrittenDateRecognizer",
+        "ObfuscatedEmailRecognizer",
+        "CreditCardRecognizer",
+        "IbanRecognizer",
+        "EsNifRecognizer",
+        "EsNieRecognizer",
+        "ItFiscalCodeRecognizer",
+        "ItVatCodeRecognizer",
+        "ItIdentityCardRecognizer",
+        "ItPassportRecognizer",
+        "ItDriverLicenseRecognizer",
+        "PlPeselRecognizer",
+        "FiPersonalIdentityCodeRecognizer",
+        "SgFinRecognizer",
+        "SgUenRecognizer",
+        "AuAbnRecognizer",
+        "AuAcnRecognizer",
+        "AuTfnRecognizer",
+        "AuMedicareRecognizer",
+        "InPanRecognizer",
+        "InAadhaarRecognizer",
+        "InPassportRecognizer",
+        "KrRrnRecognizer",
+        "ThTninRecognizer",
+        "UkNinoRecognizer",
+        "AbaRoutingRecognizer",
+        "MedicalLicenseRecognizer"
+      ],
+      "de": [
+        "DeTaxIdRecognizer",
+        "DeTaxNumberRecognizer",
+        "DePassportRecognizer",
+        "DeIdCardRecognizer",
+        "DeSocialSecurityRecognizer",
+        "DeHealthInsuranceRecognizer",
+        "StrictDeKfzRecognizer",
+        "DeHandelsregisterRecognizer",
+        "DePlzRecognizer",
+        "DeLanrRecognizer",
+        "DeBsnrRecognizer",
+        "DeVatIdRecognizer",
+        "DeFuehrerscheinRecognizer",
+        "LegalFormRecognizer",
+        "AddressRecognizer"
+      ]
+    }
+  }
+]

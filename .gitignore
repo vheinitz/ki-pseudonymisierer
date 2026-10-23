@@ -1,0 +1,20 @@
+# Python-Umgebung und Zwischendateien
+.venv/
+__pycache__/
+*.pyc
+
+# Laufzeitdaten: Zuordnungstabelle samt Schlüssel, Gateway-Protokoll, Listen, Agenten-Sitzungen.
+# Enthalten echte personenbezogene Daten – niemals einchecken.
+data/
+
+# Modelle lädt setup.sh herunter (zusammen > 400 MB)
+models/lid/
+models/piper/
+models/custom-ner/
+
+# Trainingsdaten (vorannotierte echte Texte)
+training/data/
+
+# Videos (groß; Sprechertexte und vertonen.py sind eingecheckt)
+*.webm
+*.mp4

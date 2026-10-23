@@ -1,0 +1,139 @@
+Bitte personenbezogene Daten, die nicht anonymisiert sind auflisten
+=====================================================================
+KUNDENAKTE / CUSTOMER FILE – VERTRAULICH (FIKTIVE TESTDATEN)
+Alle Personen, Firmen und Nummern sind frei erfunden.
+=====================================================================
+
+---------------------------------------------------------------------
+1. STAMMDATEN (Deutsch)
+---------------------------------------------------------------------
+Name: Dr. Johanna Weißenberger-Kowalski
+Geburtsdatum: 14.03.1987, geboren in Bad Kreuznach
+Anschrift: Lindenstraße 42a, 55232 Alzey, Rheinland-Pfalz, Deutschland
+Telefon (privat): 06731 4987321
+Mobil: +49 171 2345678
+Fax: +49 (0)6131 / 98 76 54-3
+E-Mail: johanna.weissenberger@example.com
+Zweite E-Mail: j.kowalski+newsletter@mail.example.org
+Website: https://www.weissenberger-beratung.example.de/kontakt?id=4711
+Staatsangehörigkeit: deutsch-polnisch, römisch-katholisch
+Familienstand: verheiratet mit Markus Kowalski, zwei Kinder (Lena, 9 und Tim, 6)
+
+Steuer-ID: 86 095 742 719
+Steuernummer: 27/123/45678
+Sozialversicherungsnummer: 12 140387 W 012
+Personalausweisnummer: L01X00T47
+Reisepassnummer: C01X00T47
+Führerscheinnummer: B072RRE2I55
+Krankenversichertennummer: A123456780
+KFZ-Kennzeichen: AZ-JW 1987
+
+Bankverbindung:
+IBAN: DE89 3704 0044 0532 0130 00
+BIC: COBADEFFXXX
+Kreditkarte (Visa): 4111 1111 1111 1111, gültig bis 08/29, CVC 123
+Kreditkarte (Mastercard): 5555-5555-5555-4444
+Amex: 3782 822463 10005
+
+Arbeitgeber: Rheinhessen Analytik GmbH, Personalnummer 004711
+USt-IdNr. des Arbeitgebers: DE123456789
+Gehalt: 5.840 € brutto monatlich
+
+---------------------------------------------------------------------
+2. GESPRÄCHSNOTIZ (Fließtext)
+---------------------------------------------------------------------
+Am Dienstag, den 6. Oktober 2026 um 14:30 Uhr rief Frau Weißenberger-Kowalski
+von ihrer Festnetznummer 06731-4987321 an. Sie teilte mit, dass ihr Mann
+Markus Kowalski (geb. 02.11.1984) ab dem 1. Januar 2027 nach München in die
+Maximilianstraße 17, 80539 München umzieht. Rückruf bitte an
+markus.kowalski@example.net oder unter 0151 98765432.
+
+Ihr Hausarzt Dr. med. Friedrich Albrecht (Praxis in Mainz, Große Bleiche 8)
+hat bei ihr Diabetes Typ 2 diagnostiziert; sie nimmt täglich Metformin 1000 mg.
+Arztnummer (LANR): 123456601. Die nächste Kontrolle ist am 12.11.2026.
+
+Der Login erfolgte von der IP-Adresse 192.0.2.146, später von 198.51.100.23
+sowie über IPv6 2001:db8:85a3::8a2e:370:7334. MAC-Adresse des Geräts:
+00:1A:2B:3C:4D:5E. Benutzername: jweissenberger87, Passwort (!): Sommer2026!
+
+Sie überwies 0,05 BTC an die Adresse 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa.
+
+---------------------------------------------------------------------
+3. ENGLISH SECTION – US / UK CONTACTS
+---------------------------------------------------------------------
+Contact: Michael J. Thompson, born July 4, 1979, Chicago, Illinois.
+Address: 1234 Elm Street, Apt 5B, Springfield, IL 62704, USA
+Phone: (555) 010-4477, alternate +1-212-555-0198
+Email: mike.thompson@example.com
+Social Security Number: 536-22-8726
+ITIN: 912-70-1234
+US Passport: 340020013
+Driver's License (IL): T512-3456-7890
+Bank account: 000123456789, routing number 021000021
+Medical License: AB1234567
+He is a member of the Democratic Party and identifies as Irish-American.
+
+UK contact: Emily Clarke, 221B Baker Street, London NW1 6XE, United Kingdom.
+Phone: +44 20 7946 0958, mobile 07700 900123
+NHS number: 943 476 5919
+National Insurance number: JG 10 37 59 A
+IBAN: GB82 WEST 1234 5698 7654 32
+
+---------------------------------------------------------------------
+4. INTERNATIONALE IDENTIFIKATOREN
+---------------------------------------------------------------------
+Spanien – Carlos García López, Calle Mayor 10, 28013 Madrid
+  NIF: 12345678Z
+  NIE: X1234567L
+Italien – Mario Rossi, Via Roma 1, 00184 Roma
+  Codice Fiscale: RSSMRA85T10A562S
+  Partita IVA: 07643520567
+  Carta d'identità: CA00000AA
+  Passaporto: YA1234567
+Polen – Anna Nowak, ul. Długa 5, 00-238 Warszawa
+  PESEL: 44051401359
+Finnland – Matti Virtanen, Helsinki
+  Henkilötunnus: 131052-308T
+Singapur – Tan Wei Ming
+  NRIC: S1234567D
+  UEN: 201912345K
+Australien – Olivia Smith, 1 George St, Sydney NSW 2000
+  ABN: 51 824 753 556
+  ACN: 004 085 616
+  TFN: 123 456 782
+  Medicare: 2123 45670 1
+Indien – Rahul Sharma, Mumbai
+  PAN: ABCPE1234F
+  Aadhaar: 2345 6789 0124
+  Voter ID: ABC1234567
+  Passport: J8369854
+  Fahrzeug: MH 12 AB 1234
+Korea – Kim Min-jun, Seoul
+  RRN: 900101-1234567
+Thailand – Somchai Jaidee, Bangkok
+  TNIN: 1-1017-00203-45-1
+
+---------------------------------------------------------------------
+5. TABELLE (strukturierte Daten)
+---------------------------------------------------------------------
+Name;Geburtsdatum;Telefon;E-Mail;IBAN;Stadt
+Klaus Bergmann;23.05.1962;+49 30 12345678;k.bergmann@example.com;DE02 1203 0000 0000 2020 51;Berlin
+Sabine Hoffmann-Yilmaz;30.09.1990;0711 2233445;sabine.hy@example.org;DE02 5001 0517 0137 0750 30;Stuttgart
+Ahmet Yılmaz;01.01.1975;+49 221 9988776;ahmet.yilmaz@example.net;DE02 1001 0010 0006 8201 01;Köln
+
+---------------------------------------------------------------------
+6. RANDFÄLLE (Edge Cases)
+---------------------------------------------------------------------
+- Name in Kleinbuchstaben: heute hat peter müller angerufen.
+- Name = Ortsname: Frau Paris aus Paris fährt nach Berlin zu Herrn Berlin.
+- Name = Wort: Herr Wolf und Frau Sommer trafen sich im Sommer.
+- Telefon ohne Trenner: 004917123456789
+- E-Mail verschleiert: anna (at) example (dot) com
+- Datum ausgeschrieben: am dreiundzwanzigsten Oktober zweitausendsechsundzwanzig
+- Kreditkarte im Fließtext: Karte 4111111111111111 bitte belasten.
+- Ungültige Kreditkarte (Luhn falsch): 4111 1111 1111 1112
+- Ungültige IBAN (Prüfziffer falsch): DE00370400440532013000
+- Keine PII (False-Positive-Test): Artikelnummer 2026-10-23-001, Version 1.2.3.4,
+  Bestellung #4711, Raum 0.42, ISBN 978-3-16-148410-0
+- Gemischt: Ruf Dr. Albrecht an (+49 6131 555123), Termin 12.11. um 9 Uhr.
+=====================================================================
