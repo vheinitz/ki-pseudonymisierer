@@ -1,5 +1,7 @@
 # KI-Pseudonymisierer
 
+*Deutsch · [English](README.en.md)*
+
 Lokale Web-Anwendung, die Texte vor einer KI-Anfrage **pseudonymisiert**: Namen, Firmen,
 Anschriften, Kennnummern usw. werden durch Platzhalter wie `<PERSON:3f9a2c71b04e>` ersetzt,
 die Antwort der KI wird anschließend automatisch zurückübersetzt. Alles läuft auf dem eigenen
