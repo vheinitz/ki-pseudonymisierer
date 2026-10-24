@@ -12,20 +12,25 @@ Original wird verschlüsselt lokal gespeichert, damit die Antwort zurücküberse
 
 ## Was drin ist
 
-- **Erkennung:** [Microsoft Presidio](https://github.com/microsoft/presidio) mit spaCy-Modellen
-  (de/en) und [GLiNER](https://github.com/urchade/GLiNER) (Transformer) für Personen,
-  Organisationen und Orte; Mustererkenner für Kennnummern vieler Länder, Werte hinter
+- **Erkennung:** [Microsoft Presidio](https://github.com/microsoft/presidio); für Personen,
+  Organisationen, Orte und Anschriften wählbar [GLiNER](https://github.com/urchade/GLiNER)
+  (`gliner_multi_pii-v1`), die spaCy-Modelle `de/en_core_*_lg` oder ein eigenes spaCy-Modell
+  aus `models/custom-ner` (Werkzeuge zum Annotieren und Umwandeln in `training/`;
+  `engines.json`). Dazu Mustererkenner für Kennnummern vieler Länder, Werte hinter
   Feldbeschriftungen („Steuer-ID: …“), Firmen über Rechtsformen, Anschriften, Gesundheits-
   und Religionsangaben (Art. 9 DSGVO).
 - **Sprache abschnittsweise** per fastText (`lid.176`), gemischtsprachige Texte werden je
   Abschnitt mit dem passenden Modell geprüft.
-- **Datei-Upload:** .txt, .md, .pdf, .docx (.doc/.odt/.rtf über LibreOffice).
+- **Datei-Upload:** .pdf, .docx, Textdateien (.txt, .md, .csv, .json, .html …); .doc/.odt/.rtf
+  über LibreOffice.
 - **Eigene Listen:** Namen, die immer erkannt werden; Ersetzungsliste für Produkt- und
-  Firmenbegriffe (auch mitten im Wort, mit Übersetzungen); Profile für Fachkontexte.
+  Firmenbegriffe (auch mitten im Wort, mit Übersetzungen); Profile mit Voreinstellungen und
+  einer Liste bekannter Personen, deren Namen stehen bleiben dürfen (z. B. Verstorbene).
 - **KI-Anfrage direkt aus der Anwendung** an Claude Code oder pi (`agents.json`), ohne Werkzeuge,
   wahlweise ohne Sitzung.
-- **Gateway** (`gateway.py`): Durchleitung und Protokoll der Claude-Code-Kommunikation zur
-  nachträglichen Prüfung (`gateway_analyze.py`).
+- **Gateway** (`gateway.py`, Port 8787, `ANTHROPIC_BASE_URL=http://127.0.0.1:8787 claude`):
+  leitet die Claude-Code-Kommunikation unverändert durch und protokolliert sie;
+  `gateway_analyze.py` prüft das Protokoll nachträglich auf private Angaben.
 
 ## Einrichtung
 
@@ -35,7 +40,7 @@ Original wird verschlüsselt lokal gespeichert, damit die Antwort zurücküberse
 ./setup.sh --mit-stimmen   # zusätzlich Piper-Stimmen für doc/vertonen.py
 ```
 
-Voraussetzung: Python ≥ 3.10, Linux oder macOS. Optional: LibreOffice (.doc-Upload),
+Voraussetzung: Python ≥ 3.10, bash und curl für `setup.sh`. Optional: LibreOffice (.doc-Upload),
 `claude` oder `pi` (KI-Anfrage), ffmpeg (Vertonung).
 
 ## Start
@@ -65,3 +70,5 @@ MIT, siehe [LICENSE](LICENSE).
 
 ---
 <sub>README erstellt 2026-10-23 auf Auftrag („Soll ich eine README.md anlegen?“ – „Ja, kurz“).</sub>
+
+<sub>Überarbeitet 2026-10-24 nach Abgleich mit dem Code (Auftrag: „das Kürzen der READMEs mit KI-Politur … ok fahre fort“).</sub>

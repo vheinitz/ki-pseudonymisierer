@@ -14,20 +14,25 @@ The user interface is in German.
 
 ## Features
 
-- **Detection:** [Microsoft Presidio](https://github.com/microsoft/presidio) with spaCy models
-  (de/en) and [GLiNER](https://github.com/urchade/GLiNER) (transformer) for persons,
-  organizations and locations; pattern recognizers for ID numbers of many countries, values
+- **Detection:** [Microsoft Presidio](https://github.com/microsoft/presidio); for persons,
+  organizations, locations and addresses either [GLiNER](https://github.com/urchade/GLiNER)
+  (`gliner_multi_pii-v1`), the spaCy models `de/en_core_*_lg` or a custom spaCy model in
+  `models/custom-ner` (annotation and conversion tools in `training/`; `engines.json`).
+  Plus pattern recognizers for ID numbers of many countries, values
   after field labels ("Tax ID: …"), companies by legal form (GmbH, AG, Ltd …), postal
   addresses, health and religion data (special categories, Art. 9 GDPR).
 - **Language detection per section** with fastText (`lid.176`); mixed-language texts are
   checked section by section with the matching model.
-- **File upload:** .txt, .md, .pdf, .docx (.doc/.odt/.rtf via LibreOffice).
+- **File upload:** .pdf, .docx, text files (.txt, .md, .csv, .json, .html …); .doc/.odt/.rtf
+  via LibreOffice.
 - **Custom lists:** names that are always detected; a replacement list for product and company
-  terms (also inside words, with translations); profiles for specific domains.
+  terms (also inside words, with translations); profiles with presets and a list of known
+  persons whose names may stay (e.g. deceased people).
 - **AI request from within the app** to Claude Code or pi (`agents.json`), without tools,
   optionally without a session.
-- **Gateway** (`gateway.py`): passes Claude Code traffic through and logs it for later review
-  (`gateway_analyze.py`).
+- **Gateway** (`gateway.py`, port 8787, `ANTHROPIC_BASE_URL=http://127.0.0.1:8787 claude`):
+  passes Claude Code traffic through unchanged and logs it; `gateway_analyze.py` checks the
+  log afterwards for private data.
 
 ## Setup
 
@@ -37,7 +42,7 @@ The user interface is in German.
 ./setup.sh --mit-stimmen   # additionally Piper voices for doc/vertonen.py
 ```
 
-Requirements: Python ≥ 3.10, Linux or macOS. Optional: LibreOffice (.doc upload),
+Requirements: Python ≥ 3.10, bash and curl for `setup.sh`. Optional: LibreOffice (.doc upload),
 `claude` or `pi` (AI request), ffmpeg (voice-over).
 
 ## Run
@@ -67,3 +72,5 @@ MIT, see [LICENSE](LICENSE).
 
 ---
 <sub>English README added 2026-10-23 on request ("ja, englische README bitte ergänzen").</sub>
+
+<sub>Revised 2026-10-24 after checking against the code (request: „das Kürzen der READMEs mit KI-Politur … ok fahre fort“).</sub>
